@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Post(author, text, date) {
+            this.author = author;
+            this.text = text;
+            this.date = date;
+
+        }
+        Post.prototype.edit = function (newText) {
+            this.text = newText;
+        }
+
+        function AttachedPost(author, text, date) {
+            Post.call(this, author, text, date);
+            this.highlighted = false;
+        }
+        AttachedPost.prototype = Object.create(Post.prototype);
+        AttachedPost.prototype.constructor = AttachedPost;
+
+
+        AttachedPost.prototype.makeTextHighlighted = function () {
+            this.highlighted = true;
+        }
+
+        let post = new Post("Roaling", "Harry Potter, the Boy, who alive", "1999");
+
+        alert(post.text);
+        post.edit("Tom Marvolo Riddle");
+        alert(post.text);
+
+
+        let attachedPost = new AttachedPost("Bulgakov", "Master and Margarita", "1950");
+
+        alert(attachedPost.text);
+        attachedPost.edit("Morfii");
+        alert(attachedPost.text);
+
+
+        alert(attachedPost.highlighted);
+        attachedPost.makeTextHighlighted();
+        alert(attachedPost.highlighted);
+
+    </script>
+</body>
+
+</html>
